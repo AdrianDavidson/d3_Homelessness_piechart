@@ -15,13 +15,17 @@ path{
     font-weight: bold;
 }
 #pie{
-    margin-left: 15%;
+    margin-left: 25%;
     padding: 10px;
-    background-color: aquamarine;
+    margin-top: 5%;
 }
 .legend {
     font-size: 12px;
   }
   rect {
     stroke-width: 2;
+  }
+  h1{
+      text-align: center;
+      margin: auto;
   }

@@ -9,7 +9,8 @@
 
 </head>
 <body>
-    <svg id="pie" width="1000" height="500"></svg>
+    <h1>Pie Chart to analyse homelessness in Ireland</h1>
+    <svg id="pie" width="1000" height="600"></svg>
     <script>
 
         var svg = d3.select("svg"),
@@ -61,41 +62,28 @@
             svg.append("g")
                .attr("transform", "translate(" + (width / 2 - 120) + "," + 20 + ")")
 
-
-               // add legend   
-	var legend = svg.append("g")
-	  .attr("class", "legend")
-        //.attr("x", w - 65)
-        //.attr("y", 50)
-	  .attr("height", 100)
-	  .attr("width", 100)
-    .attr('transform', 'translate(-20,50)')    
-      
-    
-    legend.selectAll('rect')
-      .data("browser.csv")
-      .enter()
-      .append("rect")
-	  .attr("x", width - 65)
-      .attr("y", function(d, i){ return i *  20;})
-	  .attr("width", 10)
-	  .attr("height", 10)
-	  .style("fill", function(d) { 
-        var color = color["browser.csv".indexOf(d)][1];
-        return color;
+var legendG = svg.selectAll(".legend")
+      .data(pie("browseruse.csv"))
+      .enter().append("g")
+      .attr("transform", function(d,i){
+        return "translate(" + (width - 110) + "," + (i * 15 + 20) + ")";
       })
-      
-    legend.selectAll('text')
-    .data("browser.csv")
-      .enter()
-      .append("text")
-	  .attr("x", width - 52)
-      .attr("y", function(d, i){ return i *  20 + 9;})
-	  .text(function(d) {
-        var text = color["browser.csv".indexOf(d)][0];
-        return text;
+      .attr("class", "legend");   
+    
+    legendG.append("rect")
+      .attr("width", 10)
+      .attr("height", 10)
+      .attr("fill", function(d, i) {
+        return color(i);
       });
-
+    
+    legendG.append("text")
+      .text(function(d){
+        return d.Homeless_Adults + "  " + d.data.Region;
+      })
+      .style("font-size", 12)
+      .attr("y", 10)
+      .attr("x", 11);
     </script>
 </body>
 </html>
