@@ -79,7 +79,7 @@ var legendG = svg.selectAll(".legend")
     
     legendG.append("text")
       .text(function(d){
-        return d.Homeless_Adults + "  " + d.data.Region;
+        return d.value + "  " + d.data.Region;
       })
       .style("font-size", 12)
       .attr("y", 10)
