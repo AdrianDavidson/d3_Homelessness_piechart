@@ -1,89 +1,172 @@
 <!DOCTYPE html>
 <html>
-<head>
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Assignment2 - Interactive data visualisations</title>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css" rel="stylesheet" data-semver="3.0.1" data-require="normalize@*" />
     <style>
-        
+      #chart {                                                            
+        height: 650px;                                                    
+        position: relative;                                               
+        width: 650px;
+        float: right;
+        margin-top: 10%;                                                     
+      }   
+      #chartexp{
+        height: 650px;                                                    
+        position: relative;                                               
+        width: 650px;
+        float: left;
+        margin-top: 10%;
+        border: solid 1px green;
+      }
+      p{
+          text-align: center;
+          font-size: 25px;
+          margin-top: 10%;
+      }                                                              
+      .tooltip {                                                          
+        background: #eee;                                                 
+        box-shadow: 0 0 5px #999999;                                      
+        color: #333;                                                      
+        display: none;                                                    
+        font-size: 17px;                                                  
+        left:255px;                                                       
+        padding: 10px;                                                    
+        position: absolute;                                               
+        text-align: center;                                               
+        top: 120px;                                                         
+        width: 15%;                                                      
+        z-index: 10;                                                      
+      }                                                                   
+      .legend {
+        font-size: 12px;
+      }
+      rect {
+        stroke-width: 2;
+      }
+      h1{
+      text-align: center;
+      margin: auto;
+  }
     </style>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+  </head>
 
-</head>
-<body>
-    <h1>Pie Chart to analyse homelessness in Ireland</h1>
-    <svg id="pie" width="1000" height="600"></svg>
+  <body>
+      <h1>Chart to measure homelessness in Ireland</h1>
+    <div id="chart"></div>
+    <div id ="chartexp">
+        <h1>What we do</h1>
+            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum 
+                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
+                    deserunt mollit anim id est laborum."</p>
+
+            </br>
+            <p>Click on a section of the chart to see more details</p>
+    </div>
+
+    <div id="linechart"></div>
+    <script data-require="d3@*" data-semver="3.4.6" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js"></script>
     <script>
+      (function(d3) {
+        'use strict';
 
-        var svg = d3.select("svg"),
-            width = svg.attr("width"),
-            height = svg.attr("height"),
-            radius = Math.min(width, height) / 2;
+        var width = 650;
+        var height = 650;
+        var radius = Math.min(width, height) / 2;
+        var donutWidth = 75;
+        var legendRectSize = 18;
+        var legendSpacing = 4;
+
+        var color = d3.scale.category20b();
+
+        var svg = d3.select('#chart')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + (width / 2) + 
+            ',' + (height / 2) + ')');
+
+        var arc = d3.svg.arc()
+          .innerRadius(radius - donutWidth)
+          .outerRadius(radius);
+
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.Homeless_Adults; })
+          .sort(null);
+
+        var tooltip = d3.select('#chart')                                
+          .append('div')                                                 
+          .attr('class', 'tooltip');                                     
+                      
+        tooltip.append('div')                                            
+          .attr('class', 'Region');                                       
+             
+        tooltip.append('div')                                            
+          .attr('class', 'Homeless_Adults');                                       
+
+        d3.csv('browseruse.csv', function(error, dataset) {
+          dataset.forEach(function(d) {
+            d.Homeless_Adults = +d.Homeless_Adults;
+          });
+
+          var path = svg.selectAll('path')
+            .data(pie(dataset))
+            .enter()
+            .append('path')
+            .attr('d', arc)
+            .attr('fill', function(d, i) { 
+              return color(d.data.Region); 
+            });
+
+          path.on('mouseover', function(d) {                             
+            var total = d3.sum(dataset.map(function(d) {                 
+              return d.Homeless_Adults;                                            
+            }));                                                         
+            tooltip.select('.Region').html(d.data.Region);                 
+            tooltip.select('.Homeless_Adults').html(d.data.Homeless_Adults);                 
+            tooltip.style('display', 'block');                           
+          });                                                            
+          
+          path.on('mouseout', function() {                               
+            tooltip.style('display', 'none');                            
+          });                                                            
             
-        
-        var g = svg.append("g")
-                   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-        var color = d3.scaleOrdinal(['#4daf4a','#377eb8','#ff7f00','#984ea3','#e41a1c','#69f4ee','#3f563f','#24385e','#d2e9ba']);
-
-        var pie = d3.pie().value(function(d) { 
-                return d.Homeless_Adults; 
+          var legend = svg.selectAll('.legend')
+            .data(color.domain())
+            .enter()
+            .append('g')
+            .attr('class', 'legend')
+            .attr('transform', function(d, i) {
+              var height = legendRectSize + legendSpacing;
+              var offset =  height * color.domain().length / 2;
+              var horz = -2 * legendRectSize;
+              var vert = i * height - offset;
+              return 'translate(' + horz + ',' + vert + ')';
             });
 
-        var path = d3.arc()
-                     .outerRadius(radius - 10)
-                     .innerRadius(0);
+          legend.append('rect')
+            .attr('width', legendRectSize)
+            .attr('height', legendRectSize)                                   
+            .style('fill', color)
+            .style('stroke', color);
+            
+          legend.append('text')
+            .attr('x', legendRectSize + legendSpacing)
+            .attr('y', legendRectSize - legendSpacing)
+            .text(function(d) { return d; });
 
-        var label = d3.arc()
-                      .outerRadius(radius)
-                      .innerRadius(radius - 80);
+        });
+
+        // ===============================================================================
 
 
-        d3.csv("browseruse.csv", function(error, data) {
-            if (error) {
-                throw error;
-            }
-            var arc = g.selectAll(".arc")
-                       .data(pie(data))
-                       .enter().append("g")
-                       .attr("class", "arc");
-
-            arc.append("path")
-               .attr("d", path)
-               .attr("fill", function(d) { return color(d.data.Region); });
-        
-            console.log(arc)
-        
-            arc.append("text")
-               .attr("transform", function(d) { 
-                        return "translate(" + label.centroid(d) + ")"; 
-                })
-               .text(function(d) { return d.data.Region; });
-            });
-
-            svg.append("g")
-               .attr("transform", "translate(" + (width / 2 - 120) + "," + 20 + ")")
-
-var legendG = svg.selectAll(".legend")
-      .data(pie("browseruse.csv"))
-      .enter().append("g")
-      .attr("transform", function(d,i){
-        return "translate(" + (width - 110) + "," + (i * 15 + 20) + ")";
-      })
-      .attr("class", "legend");   
-    
-    legendG.append("rect")
-      .attr("width", 10)
-      .attr("height", 10)
-      .attr("fill", function(d, i) {
-        return color(i);
-      });
-    
-    legendG.append("text")
-      .text(function(d){
-        return d.value + "  " + d.data.Region;
-      })
-      .style("font-size", 12)
-      .attr("y", 10)
-      .attr("x", 11);
+      })(window.d3);
     </script>
-</body>
+  </body>
+
 </html>

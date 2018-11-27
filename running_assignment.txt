@@ -1,0 +1,6 @@
+To run the assignment:
+
+in git Bash run the command 
+
+    "http-server"
+and follow the 8080 local host
