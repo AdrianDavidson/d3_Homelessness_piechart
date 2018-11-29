@@ -1,31 +1,80 @@
-.arc text {
-    font: 10px sans-serif;
-    text-anchor: middle;
-}
+#chart {
+    height: 650px;
+    position: relative;
+    width: 650px;
+    float: right;
+    margin-top: 10%;
+  }
+  #chartexp {
+    height: 650px;
+    position: relative;
+    width: 650px;
+    float: left;
+    margin-top: 10%;
+    border: solid 1px green;
+  }
+  p {
+    text-align: center;
+    font-size: 25px;
+    margin-top: 10%;
+  }
 
-.arc path {
-    stroke: #fff;
-}
-path{
-    background-color: black;
-}
-
-.title {
-    fill: teal;
-    font-weight: bold;
-}
-#pie{
-    margin-left: 25%;
+  .tooltip {
+    background: #eee;
+    box-shadow: 0 0 5px #999999;
+    color: #333;
+    display: none;
+    font-size: 17px;
+    left: 255px;
     padding: 10px;
-    margin-top: 5%;
-}
-.legend {
+    position: absolute;
+    text-align: center;
+    top: 120px;
+    width: 15%;
+    z-index: 10;
+  }
+
+  .legend {
     font-size: 12px;
   }
+
   rect {
     stroke-width: 2;
   }
-  h1{
-      text-align: center;
-      margin: auto;
+
+  h1 {
+    text-align: center;
+    margin: auto;
   }
+
+  body {
+    font: 10px sans-serif;
+}
+select {
+    display: block;
+}
+.bar {
+    fill: lightblue;
+    opacity: 0.8;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+#text-right{
+    height: 650px;
+    position: relative;
+    width: 650px;
+    margin-top: 10%;
+    float: right;
+    border: solid 1px green; 
+}
+#vis-container{
+    height: 650px;
+    position: relative;
+    width: 650px;
+    float: left;
+    margin-top: 10%;
+}
