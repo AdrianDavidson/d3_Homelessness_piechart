@@ -1,22 +1,25 @@
 #chart {
-    height: 650px;
     position: relative;
     width: 650px;
     float: right;
     margin-top: 10%;
   }
-  #chartexp {
-    height: 650px;
+  .chartexp {
     position: relative;
-    width: 650px;
+    width: 400px;
     float: left;
     margin-top: 10%;
-    border: solid 1px green;
   }
   p {
     text-align: center;
-    font-size: 25px;
-    margin-top: 10%;
+    font-size: 20px;
+  }
+  .manipulate {
+    position:absolute;
+    width:300px;
+    margin-left:-150px;
+    bottom:0px;
+    left:50%;
   }
 
   .tooltip {
@@ -46,15 +49,11 @@
     text-align: center;
     margin: auto;
   }
-
-  body {
-    font: 10px sans-serif;
-}
 select {
     display: block;
 }
 .bar {
-    fill: lightblue;
+    fill: rgb(8, 51, 0, 0.7);
     opacity: 0.8;
 }
 .axis path,
@@ -64,17 +63,21 @@ select {
     shape-rendering: crispEdges;
 }
 #text-right{
-    height: 650px;
     position: relative;
     width: 650px;
     margin-top: 10%;
     float: right;
-    border: solid 1px green; 
+
 }
 #vis-container{
-    height: 650px;
     position: relative;
     width: 650px;
     float: left;
     margin-top: 10%;
 }
+#ph {
+    position: relative;
+    width: 650px;
+    float: right;
+    margin-top: 10%;
+  }
