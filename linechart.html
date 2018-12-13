@@ -6,37 +6,58 @@
   <title>Line Chart</title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css" rel="stylesheet" data-semver="3.0.1"
     data-require="normalize@*" />
-    <link rel="stylesheet" type="text/css" href="../stylesheet.css">
+  <link rel="stylesheet" type="text/css" href="../stylesheet.css">
 
 </head>
 
 <body>
-  <h1>Line chart used to measure..</h1>
-  <div id="ph">
-      <ul>
-          <li>Map?</li>
-          <li>Line graph</li>
-          <li>Time Line</li>
-      </ul>
-  </div>
-  <div class="chartexp">
-    <h1>pick a good title..</h1>
-    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-      et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-      aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-      dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-      deserunt mollit anim id est laborum."</p>
 
-    </br>
-    <p>Click on a section of the chart to see more details</p>
-    
+<div id ="backcolor">
+  <h1>Line chart used to measure..</h1>
+  <div class="row">
+    <div class="house">
+      <svg width="460" height="450" viewBox="0 0 200 200" class="house">
+        <g>
+          <rect fill="green" width="20" height="50" x="110" y="90" />
+          <polygon fill="green" points="100,100 150,150 50,150" />
+
+          <rect fill="green" width="80" height="50" x="60" y="150" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="house">
+      <svg width="460" height="450" viewBox="0 0 200 200" class="house">
+        <g>
+          <rect fill="orange" width="20" height="50" x="110" y="90" />
+          <polygon fill="orange" points="100,100 150,150 50,150" />
+
+          <rect fill="orange" width="80" height="50" x="60" y="150" />
+        </g>
+      </svg>
+    </div>
+
+    <div class="house">
+      <svg width="460" height="450" viewBox="0 0 200 200" class="house">
+        <g>
+          <rect fill="white" width="20" height="50" x="110" y="90" />
+          <polygon fill="white" points="100,100 150,150 50,150" />
+
+          <rect fill="white" width="80" height="50" x="60" y="150" />
+        </g>
+      </svg>
+    </div>
   </div>
+
+</div>
+  </div>
+  
 
   <div id="linechart"></div>
 
   <div class="manipulate" align="center">
-      <a href="../barchart.html">Back</a>
-    </div>
+    <a href="../barchart.html">Back</a>
+  </div>
   <script data-require="d3@*" data-semver="3.4.6" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.6/d3.min.js"></script>
 
 </body>

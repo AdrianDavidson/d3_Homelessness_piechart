@@ -81,3 +81,13 @@ select {
     float: right;
     margin-top: 10%;
   }
+  .house {
+    float: left;
+    padding: 10px;
+    text-align: center;
+  }
+  #backcolor{
+    background-color: grey;
+    height: 100vh;
+    z-index: -1;
+  }
